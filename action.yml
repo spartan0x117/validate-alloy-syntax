@@ -1,0 +1,11 @@
+name: "validate-grafana-alloy-syntax"
+description: "Validate basic Grafana Alloy Syntax"
+inputs:
+  directory:
+    description: "Directory of Grafana Alloy configuration files to validate"
+    default: "."
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.directory }}
