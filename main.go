@@ -20,6 +20,9 @@ func main() {
 		os.Exit(1)
 	}
 
+	failed := false
+	maxFilenameLength := getMaxFilenameLength(alloyFiles)
+
 	for _, file := range alloyFiles {
 		fileContents, err := os.ReadFile(file)
 		if err != nil {
@@ -28,9 +31,14 @@ func main() {
 		}
 		_, err = parser.ParseFile(file, fileContents)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			failed = true
+			fmt.Printf("%-*s <ERROR>: %s\n", maxFilenameLength, file, err)
+		} else {
+			fmt.Printf("%-*s <OK>\n", maxFilenameLength, file)
 		}
+	}
+	if failed {
+		os.Exit(1)
 	}
 }
 
@@ -48,4 +56,14 @@ func getAlloyFiles(directory string) ([]string, error) {
 	})
 
 	return files, err
+}
+
+func getMaxFilenameLength(files []string) int {
+	maxLength := 0
+	for _, file := range files {
+		if len(file) > maxLength {
+			maxLength = len(file)
+		}
+	}
+	return maxLength
 }
