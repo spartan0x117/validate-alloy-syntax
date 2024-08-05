@@ -1,5 +1,8 @@
 name: "validate-grafana-alloy-syntax"
 description: "Validate basic Grafana Alloy Syntax"
+branding:
+  icon: check-circle
+  color: orange
 inputs:
   directory:
     description: "Directory of Grafana Alloy configuration files to validate"
